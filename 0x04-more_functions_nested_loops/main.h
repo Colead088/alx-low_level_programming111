@@ -9,6 +9,7 @@ void positive_or_negative(int i);
 int _isupper(int c);
 int _putchar(char c);
 void more_numbers(void);
+void print_line(int n);
 int _isdigit(int c);
 int mul(int a, int b);
 void print_numbers(void);
