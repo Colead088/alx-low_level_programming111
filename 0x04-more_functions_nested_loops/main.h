@@ -8,6 +8,7 @@
 void positive_or_negative(int i);
 int _isupper(int c);
 int _putchar(char c);
+void more_numbers(void);
 int _isdigit(int c);
 int mul(int a, int b);
 void print_numbers(void);
