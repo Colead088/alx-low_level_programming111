@@ -2,75 +2,43 @@
 #include <stdlib.h>
 
 /**
- * wrdcnt - counts the number of words in a string
- * @s: string to count
- *
- * Return: int of number of words
+ * argstostr - A function that concatenates all arguments of your program
+ * @ac: number of arguments
+ * @av: array containing arguments
+ * Return: A pointer to string that containing all arguments
+ * or NULL if ac == 0, if av == NULL, or upon failure
  */
-int wrdcnt(char *s)
+char *argstostr(int ac, char **av)
 {
-	int i, n = 0;
+	char *new_str;
+	int len = 0, i = 0, j, k = 0;
 
-	for (i = 0; s[i]; i++)
+	if (ac <= 0 || av == NULL)
+		return (NULL);
+
+	for (; i < ac; i++)
 	{
-		if (s[i] == ' ')
-		{
-			if (s[i + 1] != ' ' && s[i + 1] != '\0')
-				n++;
-		}
-		else if (i == 0)
-			n++;
+		for (j = 0; av[i][j]; j++)
+			len++;
+		len++;
 	}
-	n++;
-	return (n);
-}
 
-/**
- * strtow - splits a string into words
- * @str: string to split
- *
- * Return: pointer to an array of strings
- */
-char **strtow(char *str)
-{
-	int i, j, k, l, n = 0, wc = 0;
-	char **w;
+	len++;
+	new_str = malloc(len * sizeof(char));
+	if (new_str == NULL)
+		return (NULL);
 
-	if (str == NULL || *str == '\0')
-		return (NULL);
-	n = wrdcnt(str);
-	if (n == 1)
-		return (NULL);
-	w = (char **)malloc(n * sizeof(char *));
-	if (w == NULL)
-		return (NULL);
-	w[n - 1] = NULL;
-	i = 0;
-	while (str[i])
+	for (i = 0; i < ac; i++)
 	{
-		if (str[i] != ' ' && (i == 0 || str[i - 1] == ' '))
+		for (j = 0; av[i][j]; j++)
 		{
-			for (j = 1; str[i + j] != ' ' && str[i + j]; j++)
-				;
-			j++;
-			w[wc] = (char *)malloc(j * sizeof(char));
-			j--;
-			if (w[wc] == NULL)
-			{
-				for (k = 0; k < wc; k++)
-					free(w[k]);
-				free(w[n - 1]);
-				free(w);
-				return (NULL);
-			}
-			for (l = 0; l < j; l++)
-				w[wc][l] = str[i + l];
-			w[wc][l] = '\0';
-			wc++;
-			i += j;
+			new_str[k] = av[i][j];
+			k++;
 		}
-		else
-			i++;
+		new_str[k] = '\n';
+		k++;
 	}
-	return (w);
+
+	new_str[k] = '\0';
+	return (new_str);
 }
